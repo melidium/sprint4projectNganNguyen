@@ -4,7 +4,7 @@ import pandas as pd
 import plotly.express as px
 
 # import dataframe
-file_path = 'sprint4project/vehicle_us.csv'
+file_path = 'vehicle_us.csv'
 df_vehicle_us = pd.read_csv(file_path)
 
 # Scatter Plot for model type and transmission comparison with price:
