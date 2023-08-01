@@ -17,8 +17,8 @@ model_year_median = df_vehicle_us['model_year'].median()
 df_vehicle_us['model_year'] = df_vehicle_us['model_year'].fillna(model_year_median)
 df_vehicle_us['model_year'] = df_vehicle_us['model_year'].astype(int)
 
-odometer_nan = df_vehicle_us.groupby(['model_year', 'model'])['odometer'].transform('median')
-df_vehicle_us['odometer'] = df_vehicle_us.groupby(['model_year', 'model'])['odometer'].fillna(odometer_nan)
+odometer_nan = df_vehicle_us.groupby(['model_year'])['odometer'].transform('median')
+df_vehicle_us['odometer'] = df_vehicle_us.groupby(['model_year'])['odometer'].fillna(odometer_nan)
 
 # Scatter Plot for model type and transmission comparison with price:
 fig_model_transmission = px.scatter( df_vehicle_us, x='odometer', y='price', color='transmission' )
