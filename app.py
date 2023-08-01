@@ -7,8 +7,21 @@ import plotly.express as px
 file_path = 'vehicle_us.csv'
 df_vehicle_us = pd.read_csv(file_path)
 
+#filling in NaN Values:
+df_vehicle_us['is_4wd'] = df_vehicle_us['is_4wd'].fillna(0)
+
+cylinder_median = df_vehicle_us['cylinders'].median()
+df_vehicle_us['cylinders'] = df_vehicle_us['cylinders'].fillna(cylinder_median)
+
+model_year_median = df_vehicle_us['model_year'].median()
+df_vehicle_us['model_year'] = df_vehicle_us['model_year'].fillna(model_year_median)
+df_vehicle_us['model_year'] = df_vehicle_us['model_year'].astype(int)
+
+odometer_nan = df_vehicle_us.groupby(['model_year', 'model'])['odometer'].transform('median')
+df_vehicle_us['odometer'] = df_vehicle_us.groupby(['model_year', 'model'])['odometer'].fillna(odometer_nan)
+
 # Scatter Plot for model type and transmission comparison with price:
-fig_model_transmission = px.scatter( df_vehicle_us, x='model', y='price', color='transmission' )
+fig_model_transmission = px.scatter( df_vehicle_us, x='odometer', y='price', color='transmission' )
 
 # Histogram for Car's Paint Color Price:
 fig_color_type = px.histogram( df_vehicle_us, title='Price Based on Vehicle\'s Paint Color', x='price', color='paint_color', nbins=100, labels={'paint_color':'Paint Color', 'price':'Price'} )
